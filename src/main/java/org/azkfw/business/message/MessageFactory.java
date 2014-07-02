@@ -17,7 +17,7 @@
  */
 package org.azkfw.business.message;
 
-import org.azkfw.core.util.StringUtility;
+import org.azkfw.util.StringUtility;
 
 /**
  * このクラスは、メッセージのインスタンス生成を行うファクトリークラスです。

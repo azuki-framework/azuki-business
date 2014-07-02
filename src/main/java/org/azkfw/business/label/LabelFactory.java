@@ -17,7 +17,7 @@
  */
 package org.azkfw.business.label;
 
-import org.azkfw.core.util.StringUtility;
+import org.azkfw.util.StringUtility;
 
 /**
  * このクラスは、ラベルのインスタンス生成を行うファクトリークラスです。

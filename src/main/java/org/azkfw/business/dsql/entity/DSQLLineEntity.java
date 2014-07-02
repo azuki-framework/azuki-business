@@ -17,8 +17,8 @@
  */
 package org.azkfw.business.dsql.entity;
 
-import org.azkfw.core.util.StringUtility;
 import org.azkfw.persistence.entity.Entity;
+import org.azkfw.util.StringUtility;
 
 /**
  * このクラスは、ダイナミックSQL行情報を保持するエンティティクラスです。

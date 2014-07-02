@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.azkfw.core.util.StringUtility;
 import org.azkfw.persistence.entity.Entity;
+import org.azkfw.util.StringUtility;
 
 /**
  * このクラスは、ダイナミックSQL情報を保持するエンティティクラスです。

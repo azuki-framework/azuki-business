@@ -25,9 +25,9 @@ import java.util.Properties;
 
 import org.azkfw.business.BusinessServiceException;
 import org.azkfw.business.manager.AbstractManager;
-import org.azkfw.core.util.StringUtility;
-import org.azkfw.persistence.ConfigurationFormatException;
-import org.azkfw.persistence.context.Context;
+import org.azkfw.configuration.ConfigurationFormatException;
+import org.azkfw.context.Context;
+import org.azkfw.util.StringUtility;
 
 /**
  * このクラスは、メッセージの管理を行うマネージャークラスです。

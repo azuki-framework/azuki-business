@@ -19,7 +19,7 @@ package org.azkfw.business.message;
 
 import java.util.Map;
 
-import org.azkfw.core.util.StringUtility;
+import org.azkfw.util.StringUtility;
 
 /**
  * このクラスは、メッセージ情報を保持するクラスです。

@@ -31,9 +31,9 @@ import org.apache.commons.digester3.Digester;
 import org.azkfw.business.dsql.entity.DSQLEntity;
 import org.azkfw.business.dsql.entity.DSQLLineEntity;
 import org.azkfw.business.manager.AbstractManager;
-import org.azkfw.core.util.StringUtility;
-import org.azkfw.persistence.context.Context;
+import org.azkfw.context.Context;
 import org.azkfw.persistence.entity.Entity;
+import org.azkfw.util.StringUtility;
 import org.xml.sax.SAXException;
 
 /**

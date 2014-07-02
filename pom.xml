@@ -51,7 +51,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.azkfw</groupId>
-			<artifactId>azuki-base</artifactId>
+			<artifactId>azuki-persistence</artifactId>
 			<version>1.2.0</version>
 		</dependency>
 

@@ -19,7 +19,7 @@ package org.azkfw.business.label;
 
 import java.util.Map;
 
-import org.azkfw.core.util.StringUtility;
+import org.azkfw.util.StringUtility;
 
 /**
  * このクラスは、ラベル情報を保持するクラスです。

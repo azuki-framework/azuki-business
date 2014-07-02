@@ -28,7 +28,7 @@ import java.util.Map;
 
 import org.azkfw.business.dsql.DynamicSQL;
 import org.azkfw.business.paging.Paging;
-import org.azkfw.core.util.StringUtility;
+import org.azkfw.util.StringUtility;
 
 /**
  * このクラスは、ダイナミックSQLでのデータアクセス機能を実装したDAOクラスです。

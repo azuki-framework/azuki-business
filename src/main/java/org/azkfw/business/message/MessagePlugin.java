@@ -20,7 +20,7 @@ package org.azkfw.business.message;
 import java.io.IOException;
 
 import org.azkfw.business.BusinessServiceException;
-import org.azkfw.persistence.ConfigurationFormatException;
+import org.azkfw.configuration.ConfigurationFormatException;
 import org.azkfw.plugin.AbstractPlugin;
 import org.azkfw.plugin.PluginServiceException;
 

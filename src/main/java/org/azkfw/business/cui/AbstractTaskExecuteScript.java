@@ -19,8 +19,8 @@ package org.azkfw.business.cui;
 
 import org.azkfw.business.progress.ProgressSupport;
 import org.azkfw.business.task.Task;
-import org.azkfw.core.console.Console;
-import org.azkfw.core.console.ConsoleFactory;
+import org.azkfw.console.Console;
+import org.azkfw.console.ConsoleFactory;
 
 /**
  * このクラスは、タスク実行機能を実装したスクリプトクラスです。

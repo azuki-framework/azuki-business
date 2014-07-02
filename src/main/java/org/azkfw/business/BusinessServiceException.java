@@ -17,7 +17,7 @@
  */
 package org.azkfw.business;
 
-import org.azkfw.core.lang.PrimitiveException;
+import org.azkfw.lang.PrimitiveException;
 
 /**
  * このクラスは、ビジネスサービス層に起因する例外クラスです。

@@ -17,7 +17,7 @@
  */
 package org.azkfw.business.logic;
 
-import org.azkfw.core.lang.LoggingObject;
+import org.azkfw.lang.LoggingObject;
 
 /**
  * このクラスは、ロジック機能を実装する基底クラスです。
