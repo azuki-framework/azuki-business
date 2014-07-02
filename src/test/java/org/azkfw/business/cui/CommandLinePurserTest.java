@@ -15,7 +15,6 @@ public class CommandLinePurserTest extends TestCase {
 
 	@Test
 	public void test() {
-		CommandLinePurser clp = new CommandLinePurser();
 
 	}
 }
