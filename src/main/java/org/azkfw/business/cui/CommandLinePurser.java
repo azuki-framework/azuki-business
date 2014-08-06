@@ -60,8 +60,7 @@ public class CommandLinePurser {
 	/**
 	 * フラグを指定する。
 	 * 
-	 * @param aKey
-	 *            フラグキー
+	 * @param aKey フラグキー
 	 */
 	public void setFlag(final String aKey) {
 		flags.put(getKey(aKey), false);
@@ -70,8 +69,7 @@ public class CommandLinePurser {
 	/**
 	 * フラグの有無を判定する。
 	 * 
-	 * @param aKey
-	 *            キー
+	 * @param aKey キー
 	 * @return 結果
 	 */
 	public boolean isFlag(final String aKey) {
@@ -86,8 +84,7 @@ public class CommandLinePurser {
 	/**
 	 * オプション(必須)を指定する。
 	 * 
-	 * @param aKey
-	 *            オプションキー
+	 * @param aKey オプションキー
 	 */
 	public void setOption(final String aKey) {
 		options.put(getKey(aKey), null);
@@ -96,15 +93,12 @@ public class CommandLinePurser {
 	/**
 	 * オプションを指定する。
 	 * 
-	 * @param aKey
-	 *            オプションキー
-	 * @param aDefault
-	 *            デフォルト値(nullは指定不可)
+	 * @param aKey オプションキー
+	 * @param aDefault デフォルト値(nullは指定不可)
 	 */
 	public void setOption(final String aKey, final String aDefault) {
 		if (null == aDefault) {
-			throw new IllegalArgumentException(
-					"Option default value cannot appoint Null.[" + aKey + "]");
+			throw new IllegalArgumentException("Option default value cannot appoint Null.[" + aKey + "]");
 		}
 		options.put(getKey(aKey), aDefault);
 	}
@@ -112,8 +106,7 @@ public class CommandLinePurser {
 	/**
 	 * オプションを取得する。
 	 * 
-	 * @param aKey
-	 *            キー
+	 * @param aKey キー
 	 * @return 値
 	 */
 	public String getOption(final String aKey) {
@@ -128,8 +121,7 @@ public class CommandLinePurser {
 	/**
 	 * 引数を取得する。
 	 * 
-	 * @param index
-	 *            インデックス
+	 * @param index インデックス
 	 * @return 値
 	 */
 	public String getArgument(final int index) {
@@ -137,12 +129,19 @@ public class CommandLinePurser {
 	}
 
 	/**
+	 * 引数の数を取得する。
+	 * 
+	 * @return 引数の数
+	 */
+	public int getArgumentSize() {
+		return arguments.size();
+	}
+
+	/**
 	 * コマンド引数を解析する。
 	 * 
-	 * @param args
-	 *            引数
-	 * @throws IllegalArgumentException
-	 *             コマンド引数に不正があった場合
+	 * @param args 引数
+	 * @throws IllegalArgumentException コマンド引数に不正があった場合
 	 */
 	public void purse(final String[] args) throws IllegalArgumentException {
 		for (int i = 0; i < args.length; i++) {
@@ -155,9 +154,7 @@ public class CommandLinePurser {
 				if (i + 1 < args.length) {
 					String value = args[i + 1];
 					if (isKey(value)) {
-						throw new IllegalArgumentException(
-								"An optional value is not appointed.[" + str
-										+ "]");
+						throw new IllegalArgumentException("An optional value is not appointed.[" + str + "]");
 
 					} else {
 						options.put(str, value);
@@ -166,13 +163,11 @@ public class CommandLinePurser {
 					}
 
 				} else {
-					throw new IllegalArgumentException(
-							"An optional value is not appointed.[" + str + "]");
+					throw new IllegalArgumentException("An optional value is not appointed.[" + str + "]");
 				}
 
 			} else if (isKey(str)) {
-				throw new IllegalArgumentException(
-						"Undefined option was appointed.[" + str + "]");
+				throw new IllegalArgumentException("Undefined option was appointed.[" + str + "]");
 
 			} else {
 				arguments.add(str);
@@ -183,8 +178,7 @@ public class CommandLinePurser {
 		for (String key : options.keySet()) {
 			String value = options.get(key);
 			if (null == value) {
-				throw new IllegalArgumentException(
-						"Required option is not appointed.[" + key + "]");
+				throw new IllegalArgumentException("Required option is not appointed.[" + key + "]");
 			}
 		}
 	}
