@@ -28,8 +28,8 @@ import java.util.Properties;
 import org.apache.commons.digester3.Digester;
 import org.azkfw.business.BusinessServiceException;
 import org.azkfw.business.manager.AbstractManager;
+import org.azkfw.business.property.PropertyFile;
 import org.azkfw.context.Context;
-import org.azkfw.persistence.proterty.PropertyFile;
 import org.azkfw.util.StringUtility;
 import org.xml.sax.SAXException;
 

@@ -17,14 +17,14 @@
  */
 package org.azkfw.business.task;
 
+import org.azkfw.business.property.Property;
+import org.azkfw.business.property.PropertyManager;
+import org.azkfw.business.property.PropertySupport;
 import org.azkfw.context.Context;
 import org.azkfw.context.ContextSupport;
 import org.azkfw.lang.LoggingObject;
-import org.azkfw.persistence.parameter.Parameter;
-import org.azkfw.persistence.parameter.ParameterSupport;
-import org.azkfw.persistence.proterty.Property;
-import org.azkfw.persistence.proterty.PropertyManager;
-import org.azkfw.persistence.proterty.PropertySupport;
+import org.azkfw.parameter.Parameter;
+import org.azkfw.parameter.ParameterSupport;
 
 /**
  * このクラスは、タスクの作成を行うビルダークラスです。

@@ -17,10 +17,10 @@
  */
 package org.azkfw.business.logic;
 
+import org.azkfw.business.property.Property;
+import org.azkfw.business.property.PropertySupport;
 import org.azkfw.context.Context;
 import org.azkfw.context.ContextSupport;
-import org.azkfw.persistence.proterty.Property;
-import org.azkfw.persistence.proterty.PropertySupport;
 
 /**
  * このクラスは、永続化機能をサポートしたロジッククラスです。
