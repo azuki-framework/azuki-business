@@ -18,19 +18,18 @@
 package org.azkfw.business.progress;
 
 /**
- * このインターフェースは、プログレス機能のサポートを行うためのインターフェースです。
+ * このインターフェースは、プログレスリスナー機能を定義したインターフェースです。
  * 
- * @since 1.0.1
- * @version 1.0.1 2014/06/10
+ * @since 1.0.0
+ * @version 1.0.0 2014/10/14
  * @author Kawakicchi
  */
-public interface ProgressSupport {
+public interface ProgressListener {
 
 	/**
-	 * プログレスリスナーを追加する。
+	 * 進捗イベント
 	 * 
-	 * @param listener リスナー
+	 * @param event イベント
 	 */
-	public void addProgressListener(final ProgressListener listener);
-
+	public void progress(final ProgressEvent event);
 }

@@ -17,6 +17,8 @@
  */
 package org.azkfw.business.cui;
 
+import org.azkfw.business.progress.ProgressEvent;
+import org.azkfw.business.progress.ProgressListener;
 import org.azkfw.business.progress.ProgressSupport;
 import org.azkfw.business.task.Task;
 import org.azkfw.console.Console;
@@ -52,11 +54,14 @@ public abstract class AbstractTaskExecuteScript implements Runnable {
 		endTime = -1;
 	}
 
+	private int progressSize;
+	private String spaceLine;
+	private String backLine;
+
 	/**
 	 * タスクを実行する。
 	 * 
-	 * @param aTask
-	 *            タスク
+	 * @param aTask タスク
 	 */
 	public synchronized void execute(final Task aTask) {
 		if (!running) {
@@ -70,48 +75,46 @@ public abstract class AbstractTaskExecuteScript implements Runnable {
 			Thread t = new Thread(this);
 			t.start();
 
-			int progressSize = 50;
+			progressSize = 50;
 			int totalSize = progressSize + 10 + 1 + 10;
 
-			String spaceLine = spaceLine(totalSize);
-			String backLine = backLine(totalSize);
+			spaceLine = spaceLine(totalSize);
+			backLine = backLine(totalSize);
 
 			ProgressSupport progress = null;
 			if (task instanceof ProgressSupport) {
 				progress = (ProgressSupport) task;
+				progress.addProgressListener(new ProgressListener() {
+
+					@Override
+					public void progress(final ProgressEvent event) {
+						float prg = event.getProgress();
+						StringBuilder s = new StringBuilder();
+
+						if (0 <= prg) {
+							int c = (int) Math.floor(prg / (100.f / (float) progressSize));
+							for (int i = 0; i < c; i++) {
+								s.append("=");
+							}
+							if (c < progressSize) {
+								s.append(">");
+							}
+						}
+
+						long time = System.currentTimeMillis() - startTime;
+
+						console.print(backLine);
+						String timeString = AbstractTaskExecuteScript.toString(time);
+						if (0 <= prg) {
+							console.print(" %5.1f%% [%-" + progressSize + "s] %s", prg, s.toString(), timeString);
+						} else {
+							console.print("  ??.?%% [%-" + progressSize + "s] %s", "", timeString);
+						}
+					}
+				});
 			}
 
-			float prg = 0.0f;
 			while (running) {
-				if (null != progress) {
-					prg = progress.progress();
-				}
-
-				StringBuilder s = new StringBuilder();
-				if (0 <= prg) {
-					int c = (int) Math.floor(prg
-							/ (100.f / (float) progressSize));
-					for (int i = 0; i < c; i++) {
-						s.append("=");
-					}
-					if (c < progressSize) {
-						s.append(">");
-					}
-				}
-
-				long time = System.currentTimeMillis() - startTime;
-
-				if (null != progress) {
-					console.print(backLine);
-					if (0 <= prg) {
-						console.print(" %5.1f%% [%-" + progressSize + "s] %s",
-								prg, s.toString(), toString(time));
-					} else {
-						console.print("  ??.?%% [%-" + progressSize + "s] %s",
-								"", toString(time));
-					}
-				}
-
 				try {
 					Thread.sleep(100);
 				} catch (Exception ex) {
@@ -142,7 +145,7 @@ public abstract class AbstractTaskExecuteScript implements Runnable {
 		}
 	}
 
-	private String toString(final long aTime) {
+	private static String toString(final long aTime) {
 		String s = null;
 		if (1000 * 60 * 60 <= aTime) {
 			// h
