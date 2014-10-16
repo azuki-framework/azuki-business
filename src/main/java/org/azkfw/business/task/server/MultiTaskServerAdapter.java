@@ -26,7 +26,7 @@ import org.azkfw.business.task.Task;
  * @version 1.0.0 2014/10/14
  * @author Kawakicchi
  */
-public class MultiTaskServerAdapter implements MultiTaskServerListener {
+public abstract class MultiTaskServerAdapter implements MultiTaskServerListener {
 
 	@Override
 	public void multiTaskServerStarted(final MultiTaskServerEvent event) {

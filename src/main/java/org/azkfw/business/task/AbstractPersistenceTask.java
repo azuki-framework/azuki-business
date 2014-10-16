@@ -29,7 +29,7 @@ import org.azkfw.context.ContextSupport;
  * @version 1.0.1 2014/06/05
  * @author Kawakicchi
  */
-public abstract class AbstractPersistenceTask extends AbstractTask implements ContextSupport, PropertySupport {
+public abstract class AbstractPersistenceTask extends AbstractNotificationTask implements ContextSupport, PropertySupport {
 
 	/**
 	 * コンテキスト

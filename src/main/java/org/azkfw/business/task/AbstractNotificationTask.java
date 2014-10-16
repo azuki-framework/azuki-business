@@ -14,10 +14,10 @@ import org.azkfw.business.progress.ProgressSupport;
  * @version 1.0.0 2014/10/14
  * @author Kawakicchi
  */
-public abstract class AbstractProgressTask extends AbstractPersistenceTask implements ProgressSupport {
+public abstract class AbstractNotificationTask extends AbstractTask implements ProgressSupport {
 
 	/** Progress event */
-	private TaskProgressEvent event;
+	private TaskProgressEvent progressEvent;
 
 	/** Progress listener list */
 	private List<ProgressListener> listeners;
@@ -25,9 +25,9 @@ public abstract class AbstractProgressTask extends AbstractPersistenceTask imple
 	/**
 	 * コンストラクタ
 	 */
-	public AbstractProgressTask() {
+	public AbstractNotificationTask() {
 		super();
-		event = new TaskProgressEvent(this);
+		progressEvent = new TaskProgressEvent(this);
 		listeners = new ArrayList<ProgressListener>();
 	}
 
@@ -36,9 +36,9 @@ public abstract class AbstractProgressTask extends AbstractPersistenceTask imple
 	 * 
 	 * @param aClass クラス
 	 */
-	public AbstractProgressTask(final Class<?> aClass) {
+	public AbstractNotificationTask(final Class<?> aClass) {
 		super(aClass);
-		event = new TaskProgressEvent(this);
+		progressEvent = new TaskProgressEvent(this);
 		listeners = new ArrayList<ProgressListener>();
 	}
 
@@ -47,42 +47,75 @@ public abstract class AbstractProgressTask extends AbstractPersistenceTask imple
 	 * 
 	 * @param aName 名前
 	 */
-	public AbstractProgressTask(final String aName) {
+	public AbstractNotificationTask(final String aName) {
 		super(aName);
-		event = new TaskProgressEvent(this);
+		progressEvent = new TaskProgressEvent(this);
 		listeners = new ArrayList<ProgressListener>();
 	}
 
 	@Override
 	public final void addProgressListener(final ProgressListener listener) {
-		listeners.add(listener);
+		synchronized (listeners) {
+			listeners.add(listener);
+		}
+	}
+
+	@Override
+	public final void removeProgressListener(final ProgressListener listener) {
+		synchronized (listeners) {
+			listeners.remove(listener);
+		}
 	}
 
 	protected final void callProgress(final float aProgress) {
-		event.setProgress(aProgress);
-		for (ProgressListener listener : listeners) {
-			listener.progress(event);
+		synchronized (listeners) {
+			progressEvent.setProgress(aProgress);
+			for (ProgressListener listener : listeners) {
+				try {
+					listener.progress(progressEvent);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
 		}
 	}
 
 	protected final void callProgress(final String aMessage) {
-		event.setProgress(aMessage);
-		for (ProgressListener listener : listeners) {
-			listener.progress(event);
+		synchronized (listeners) {
+			progressEvent.setProgress(aMessage);
+			for (ProgressListener listener : listeners) {
+				try {
+					listener.progress(progressEvent);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
 		}
 	}
 
 	protected final void callProgress(final float aProgress, final String aMessage) {
-		event.setProgress(aProgress, aMessage);
-		for (ProgressListener listener : listeners) {
-			listener.progress(event);
+		synchronized (listeners) {
+			progressEvent.setProgress(aProgress, aMessage);
+			for (ProgressListener listener : listeners) {
+				try {
+					listener.progress(progressEvent);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
 		}
 	}
 
 	protected final void callProgress(final float aProgress, final String aMessage, final Object aDetail) {
-		event.setProgress(aProgress, aMessage, aDetail);
-		for (ProgressListener listener : listeners) {
-			listener.progress(event);
+		synchronized (listeners) {
+			progressEvent.setProgress(aProgress, aMessage, aDetail);
+			for (ProgressListener listener : listeners) {
+				try {
+					listener.progress(progressEvent);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
 		}
 	}
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.azkfw.business.task.Task;
+import org.azkfw.lang.LoggingObject;
 
 /**
  * このクラスは、複数タスクを管理するサーバクラスです。
@@ -12,7 +13,7 @@ import org.azkfw.business.task.Task;
  * @version 1.0.0 2014/10/14
  * @author Kawakicchi
  */
-public class MultiTaskServer implements Runnable {
+public class MultiTaskServer extends LoggingObject implements Runnable {
 
 	private Thread thread;
 	private boolean stopRequestFlag;
@@ -25,26 +26,78 @@ public class MultiTaskServer implements Runnable {
 
 	private List<TaskThread> taskThreads;
 
+	/**
+	 * コンストラクタ
+	 */
 	public MultiTaskServer() {
+		super(MultiTaskServer.class);
+
 		event = new MultiTaskServerEvent(this);
 		listeners = new ArrayList<MultiTaskServerListener>();
 		maxRunningTaskSize = 2;
 		taskThreads = new ArrayList<TaskThread>();
 	}
 
-	public synchronized void start() {
+	/**
+	 * マルチタスクサーバへリスナーを追加する。
+	 * 
+	 * @param listener リスナー
+	 */
+	public final void addMultiTaskServerListener(final MultiTaskServerListener listener) {
+		synchronized (listeners) {
+			listeners.add(listener);
+		}
+	}
+
+	/**
+	 * マルチタスクサーバからリスナーを削除する。
+	 * 
+	 * @param listener リスナー
+	 */
+	public final void removeMultiTaskServerListener(final MultiTaskServerListener listener) {
+		synchronized (listeners) {
+			listeners.remove(listener);
+		}
+	}
+
+	/**
+	 * サーバを起動する。
+	 * 
+	 * @return 結果。起動済みの場合は、<code>false</code>を返す。
+	 */
+	public synchronized boolean start() {
+		boolean result = false;
 		if (null == thread) {
+			info("MultiTaskServer start.");
+			
 			stopRequestFlag = false;
 			runningTaskSize = 0;
 			thread = new Thread(this);
 			thread.start();
+			result = true;
 		}
+		return result;
 	}
 
+	/**
+	 * サーバを停止する。
+	 * <p>
+	 * サーバに対して停止要求を行う。<br/>
+	 * サーバの停止判断は、
+	 * {@link MultiTaskServerListener#multiTaskServerStopped(MultiTaskServerEvent)}
+	 * にて行う。
+	 * </p>
+	 */
 	public void stop() {
+		info("MultiTaskServer stop.");
 		stopRequestFlag = true;
 	}
 
+	/**
+	 * サーバにタスクを依頼する。
+	 * 
+	 * @param aTask タスク
+	 */
 	public void queue(final Task aTask) {
 		synchronized (taskThreads) {
 			TaskThread taskThread = new TaskThread(aTask);
@@ -52,11 +105,13 @@ public class MultiTaskServer implements Runnable {
 			taskThread.setTaskThreadListener(new TaskThreadListener() {
 				@Override
 				public void taskThreadStarted(final TaskThread taskThread) {
-					for (MultiTaskServerListener listener : listeners) {
-						try {
-							listener.multiTaskServerStartedTask(event, aTask);
-						} catch (Exception ex) {
-							ex.printStackTrace();
+					synchronized (listeners) {
+						for (MultiTaskServerListener listener : listeners) {
+							try {
+								listener.multiTaskServerStartedTask(event, aTask);
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
 						}
 					}
 				}
@@ -64,11 +119,13 @@ public class MultiTaskServer implements Runnable {
 				@Override
 				public void taskThreadStopped(final TaskThread taskThread) {
 					runningTaskSize--;
-					for (MultiTaskServerListener listener : listeners) {
-						try {
-							listener.multiTaskServerStoppedTask(event, aTask);
-						} catch (Exception ex) {
-							ex.printStackTrace();
+					synchronized (listeners) {
+						for (MultiTaskServerListener listener : listeners) {
+							try {
+								listener.multiTaskServerStoppedTask(event, aTask);
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
 						}
 					}
 				}
@@ -76,11 +133,14 @@ public class MultiTaskServer implements Runnable {
 
 			taskThreads.add(taskThread);
 
-			for (MultiTaskServerListener listener : listeners) {
-				try {
-					listener.multiTaskServerQueuedTask(event, aTask);
-				} catch (Exception ex) {
-					ex.printStackTrace();
+			synchronized (listeners) {
+				info ("MultiTaskServer call lisetener.[multiTaskServerQueuedTask()]");
+				for (MultiTaskServerListener listener : listeners) {
+					try {
+						listener.multiTaskServerQueuedTask(event, aTask);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 				}
 			}
 		}
@@ -88,11 +148,14 @@ public class MultiTaskServer implements Runnable {
 
 	@Override
 	public void run() {
-		for (MultiTaskServerListener listener : listeners) {
-			try {
-				listener.multiTaskServerStarted(event);
-			} catch (Exception ex) {
-				ex.printStackTrace();
+		synchronized (listeners) {
+			info ("MultiTaskServer call lisetener.[multiTaskServerStarted()]");
+			for (MultiTaskServerListener listener : listeners) {
+				try {
+					listener.multiTaskServerStarted(event);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		}
 
@@ -114,11 +177,14 @@ public class MultiTaskServer implements Runnable {
 
 		thread = null;
 
-		for (MultiTaskServerListener listener : listeners) {
-			try {
-				listener.multiTaskServerStopped(event);
-			} catch (Exception ex) {
-				ex.printStackTrace();
+		synchronized (listeners) {
+			info ("MultiTaskServer call lisetener.[multiTaskServerStopped()]");
+			for (MultiTaskServerListener listener : listeners) {
+				try {
+					listener.multiTaskServerStopped(event);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		}
 	}
@@ -126,6 +192,7 @@ public class MultiTaskServer implements Runnable {
 	private void runningTask() {
 		while (runningTaskSize < maxRunningTaskSize) {
 			TaskThread target = null;
+
 			synchronized (taskThreads) {
 				for (TaskThread tt : taskThreads) {
 					if (0 == tt.getStatus()) {
@@ -133,13 +200,13 @@ public class MultiTaskServer implements Runnable {
 						break;
 					}
 				}
-			}
-			if (null != target) {
-				if (target.start()) {
-					runningTaskSize++;
+				if (null != target) {
+					if (target.start()) {
+						runningTaskSize++;
+					}
+				} else {
+					break;
 				}
-			} else {
-				break;
 			}
 		}
 	}

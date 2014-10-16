@@ -18,13 +18,13 @@
 package org.azkfw.business.progress;
 
 /**
- * このクラスは、プログレスリスナー機能を実装したクラスです。
+ * このクラスは、プログレス用のリスナー機能を定義したアダプタークラスです。
  * 
  * @since 1.0.0
  * @version 1.0.0 2014/10/14
  * @author Kawakicchi
  */
-public class ProgressAdapter implements ProgressListener {
+public abstract class ProgressAdapter implements ProgressListener {
 
 	@Override
 	public void progress(final ProgressEvent event) {

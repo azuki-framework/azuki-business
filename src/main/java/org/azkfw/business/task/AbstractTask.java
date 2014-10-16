@@ -17,6 +17,9 @@
  */
 package org.azkfw.business.task;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.azkfw.lang.LoggingObject;
 
 /**
@@ -26,13 +29,20 @@ import org.azkfw.lang.LoggingObject;
  * @version 1.0.1 2014/06/05
  * @author Kawakicchi
  */
-public abstract class AbstractTask extends LoggingObject implements Task {
+public abstract class AbstractTask extends LoggingObject implements Task, TaskListenerSupport {
+
+	/** task event */
+	private TaskEvent taskEvent;
+	/** task listener */
+	private List<TaskListener> listeners;
 
 	/**
 	 * コンストラクタ
 	 */
 	public AbstractTask() {
 		super(Task.class);
+		taskEvent = new TaskEvent(this);
+		listeners = new ArrayList<TaskListener>();
 	}
 
 	/**
@@ -42,6 +52,8 @@ public abstract class AbstractTask extends LoggingObject implements Task {
 	 */
 	public AbstractTask(final Class<?> aClass) {
 		super(aClass);
+		taskEvent = new TaskEvent(this);
+		listeners = new ArrayList<TaskListener>();
 	}
 
 	/**
@@ -51,11 +63,23 @@ public abstract class AbstractTask extends LoggingObject implements Task {
 	 */
 	public AbstractTask(final String aName) {
 		super(aName);
+		taskEvent = new TaskEvent(this);
+		listeners = new ArrayList<TaskListener>();
 	}
 
 	@Override
 	public final void execute() throws TaskServiceException {
 		try {
+			synchronized (listeners) {
+				for (TaskListener listener : listeners) {
+					try {
+						listener.taskStarted(taskEvent);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+
 			doInitialize();
 			doExecute();
 		} catch (TaskServiceException ex) {
@@ -63,6 +87,30 @@ public abstract class AbstractTask extends LoggingObject implements Task {
 			throw ex;
 		} finally {
 			doRelease();
+
+			synchronized (listeners) {
+				for (TaskListener listener : listeners) {
+					try {
+						listener.taskFinished(taskEvent);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public final void addTaskListener(final TaskListener listener) {
+		synchronized (listeners) {
+			listeners.add(listener);
+		}
+	}
+
+	@Override
+	public final void removeTaskListener(final TaskListener listener) {
+		synchronized (listeners) {
+			listeners.remove(listener);
 		}
 	}
 

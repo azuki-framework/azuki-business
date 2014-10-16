@@ -33,4 +33,10 @@ public interface ProgressSupport {
 	 */
 	public void addProgressListener(final ProgressListener listener);
 
+	/**
+	 * プログレスリスナーを削除する。
+	 * 
+	 * @param listener リスナー
+	 */
+	public void removeProgressListener(final ProgressListener listener);
 }
