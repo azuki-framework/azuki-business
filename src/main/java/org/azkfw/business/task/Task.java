@@ -27,6 +27,13 @@ package org.azkfw.business.task;
 public interface Task {
 
 	/**
+	 * タスク名を取得する。
+	 * 
+	 * @return タスク名
+	 */
+	public String getName();
+
+	/**
 	 * タスクを実行する。
 	 * 
 	 * @throws TaskServiceException タスクサービスに起因する問題が発生した場合
