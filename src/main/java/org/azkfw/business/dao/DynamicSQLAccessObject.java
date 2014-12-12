@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.azkfw.business.dsql.DynamicSQL;
+import org.azkfw.dsql.DynamicSQL;
 import org.azkfw.business.paging.Paging;
 import org.azkfw.util.StringUtility;
 

@@ -19,9 +19,9 @@ package org.azkfw.business.logic;
 
 import org.azkfw.business.dao.DataAccessObject;
 import org.azkfw.business.dao.DynamicSQLAccessObject;
-import org.azkfw.business.dsql.DynamicSQL;
-import org.azkfw.business.dsql.Group;
-import org.azkfw.business.dsql.Parameter;
+import org.azkfw.dsql.DynamicSQL;
+import org.azkfw.dsql.Group;
+import org.azkfw.dsql.Parameter;
 import org.azkfw.persistence.database.DatabaseConnectionSupport;
 
 /**
