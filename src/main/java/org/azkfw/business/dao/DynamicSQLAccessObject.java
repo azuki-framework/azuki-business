@@ -26,8 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.azkfw.dsql.DynamicSQL;
 import org.azkfw.business.paging.Paging;
+import org.azkfw.dsql.DynamicSQL;
 import org.azkfw.util.StringUtility;
 
 /**
@@ -70,16 +70,10 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 
 			result = stat.execute();
 		} catch (SQLException ex) {
-			fatal(dsql.getName(), ex);
+			fatal(String.format("%s : %s", dsql.getName(), dsql.getSQL()), ex);
 			throw new DataAccessServiceException(ex);
 		} finally {
-			if (null != stat) {
-				try {
-					stat.close();
-				} catch (Exception ex) {
-					warn(ex);
-				}
-			}
+			release(stat);
 		}
 
 		return result;
@@ -101,16 +95,10 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 
 			result = stat.executeUpdate();
 		} catch (SQLException ex) {
-			fatal(dsql.getName(), ex);
+			fatal(String.format("%s : %s", dsql.getName(), dsql.getSQL()), ex);
 			throw new DataAccessServiceException(ex);
 		} finally {
-			if (null != stat) {
-				try {
-					stat.close();
-				} catch (Exception ex) {
-					warn(ex);
-				}
-			}
+			release(stat);
 		}
 
 		return result;
@@ -137,23 +125,11 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 				result = rs.getLong(1);
 			}
 		} catch (SQLException ex) {
-			fatal(dsql.getName(), ex);
+			fatal(String.format("%s : %s", dsql.getName(), dsql.getSQL()), ex);
 			throw new DataAccessServiceException(ex);
 		} finally {
-			if (null != rs) {
-				try {
-					rs.close();
-				} catch (Exception ex) {
-					warn(ex);
-				}
-			}
-			if (null != stat) {
-				try {
-					stat.close();
-				} catch (Exception ex) {
-					warn(ex);
-				}
-			}
+			release(rs);
+			release(stat);
 		}
 
 		return result;
@@ -191,23 +167,11 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 				}
 			}
 		} catch (SQLException ex) {
-			fatal(dsql.getName(), ex);
+			fatal(String.format("%s : %s", dsql.getName(), dsql.getSQL()), ex);
 			throw new DataAccessServiceException(ex);
 		} finally {
-			if (null != rs) {
-				try {
-					rs.close();
-				} catch (Exception ex) {
-					warn(ex);
-				}
-			}
-			if (null != stat) {
-				try {
-					stat.close();
-				} catch (Exception ex) {
-					warn(ex);
-				}
-			}
+			release(rs);
+			release(stat);
 		}
 
 		return result;
@@ -281,23 +245,11 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 				}
 			}
 		} catch (SQLException ex) {
-			fatal(dsql.getName(), ex);
+			fatal(String.format("%s : %s", dsql.getName(), dsql.getSQL()), ex);
 			throw new DataAccessServiceException(ex);
 		} finally {
-			if (null != rs) {
-				try {
-					rs.close();
-				} catch (Exception ex) {
-					warn(ex);
-				}
-			}
-			if (null != stat) {
-				try {
-					stat.close();
-				} catch (Exception ex) {
-					warn(ex);
-				}
-			}
+			release(rs);
+			release(stat);
 		}
 
 		return result;

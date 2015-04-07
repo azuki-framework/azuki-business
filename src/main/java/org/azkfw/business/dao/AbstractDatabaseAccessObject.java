@@ -17,6 +17,10 @@
  */
 package org.azkfw.business.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.azkfw.persistence.database.DatabaseConnection;
 import org.azkfw.persistence.database.DatabaseConnectionSupport;
 
@@ -73,4 +77,37 @@ public abstract class AbstractDatabaseAccessObject extends AbstractDataAccessObj
 		return connection;
 	}
 
+	/**
+	 * {@link ResultSet}を解放する。
+	 * 
+	 * @param resultSet {@link ResultSet}
+	 */
+	protected final void release(final ResultSet resultSet) {
+		if (null != resultSet) {
+			try {
+				if (!resultSet.isClosed()) {
+					resultSet.close();
+				}
+			} catch (SQLException ex) {
+				warn("ResultSet release error.", ex);
+			}
+		}
+	}
+
+	/**
+	 * {@link PreparedStatement}を解放する。
+	 * 
+	 * @param preparedStatement {@link PreparedStatement}
+	 */
+	protected final void release(final PreparedStatement preparedStatement) {
+		if (null != preparedStatement) {
+			try {
+				if (!preparedStatement.isClosed()) {
+					preparedStatement.close();
+				}
+			} catch (SQLException ex) {
+				warn("PreparedStatement release error.", ex);
+			}
+		}
+	}
 }
