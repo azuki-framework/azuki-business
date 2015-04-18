@@ -20,6 +20,7 @@ package org.azkfw.business.logic;
 import org.azkfw.business.dao.DataAccessObject;
 import org.azkfw.business.dao.DynamicSQLAccessObject;
 import org.azkfw.dsql.DynamicSQL;
+import org.azkfw.dsql.DynamicSQLManager;
 import org.azkfw.dsql.Group;
 import org.azkfw.dsql.Parameter;
 import org.azkfw.persistence.database.DatabaseConnectionSupport;
@@ -100,7 +101,7 @@ public abstract class AbstractDynamicSQLLogic extends AbstractDatabaseLogic {
 	 */
 	protected final DataAccessObject getDao(final String aName, final Group aGroup, final Parameter aParameter) {
 		DataAccessObject dao = null;
-		DynamicSQL dsql = DynamicSQL.generate(aName, aGroup, aParameter);
+		DynamicSQL dsql = DynamicSQLManager.generate(aName, aGroup, aParameter);
 		if (null != dsql) {
 			dao = new DynamicSQLAccessObject(dsql);
 			if (dao instanceof DatabaseConnectionSupport) {

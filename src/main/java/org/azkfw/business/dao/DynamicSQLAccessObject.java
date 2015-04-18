@@ -60,7 +60,7 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 
 		PreparedStatement stat = null;
 		try {
-			stat = getConnection().getConnection().prepareStatement(dsql.getSQL());
+			stat = getConnection().getConnection().prepareStatement(dsql.getExecuteSQL());
 			List<Object> parameters = dsql.getParameters();
 			if (null != parameters) {
 				for (int i = 0; i < parameters.size(); i++) {
@@ -70,7 +70,7 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 
 			result = stat.execute();
 		} catch (SQLException ex) {
-			fatal(String.format("%s : %s", dsql.getName(), dsql.getSQL()), ex);
+			fatal(String.format("%s : %s", dsql.getName(), dsql.getExecuteSQL()), ex);
 			throw new DataAccessServiceException(ex);
 		} finally {
 			release(stat);
@@ -85,7 +85,7 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 
 		PreparedStatement stat = null;
 		try {
-			stat = getConnection().getConnection().prepareStatement(dsql.getSQL());
+			stat = getConnection().getConnection().prepareStatement(dsql.getExecuteSQL());
 			List<Object> parameters = dsql.getParameters();
 			if (null != parameters) {
 				for (int i = 0; i < parameters.size(); i++) {
@@ -95,7 +95,7 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 
 			result = stat.executeUpdate();
 		} catch (SQLException ex) {
-			fatal(String.format("%s : %s", dsql.getName(), dsql.getSQL()), ex);
+			fatal(String.format("%s : %s", dsql.getName(), dsql.getExecuteSQL()), ex);
 			throw new DataAccessServiceException(ex);
 		} finally {
 			release(stat);
@@ -111,7 +111,7 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 		PreparedStatement stat = null;
 		ResultSet rs = null;
 		try {
-			stat = getConnection().getConnection().prepareStatement(dsql.getSQL());
+			stat = getConnection().getConnection().prepareStatement(dsql.getExecuteSQL());
 			List<Object> parameters = dsql.getParameters();
 			if (null != parameters) {
 				for (int i = 0; i < parameters.size(); i++) {
@@ -125,7 +125,7 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 				result = rs.getLong(1);
 			}
 		} catch (SQLException ex) {
-			fatal(String.format("%s : %s", dsql.getName(), dsql.getSQL()), ex);
+			fatal(String.format("%s : %s", dsql.getName(), dsql.getExecuteSQL()), ex);
 			throw new DataAccessServiceException(ex);
 		} finally {
 			release(rs);
@@ -142,7 +142,7 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 		PreparedStatement stat = null;
 		ResultSet rs = null;
 		try {
-			stat = getConnection().getConnection().prepareStatement(dsql.getSQL());
+			stat = getConnection().getConnection().prepareStatement(dsql.getExecuteSQL());
 			List<Object> parameters = dsql.getParameters();
 			if (null != parameters) {
 				for (int i = 0; i < parameters.size(); i++) {
@@ -167,7 +167,7 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 				}
 			}
 		} catch (SQLException ex) {
-			fatal(String.format("%s : %s", dsql.getName(), dsql.getSQL()), ex);
+			fatal(String.format("%s : %s", dsql.getName(), dsql.getExecuteSQL()), ex);
 			throw new DataAccessServiceException(ex);
 		} finally {
 			release(rs);
@@ -189,7 +189,7 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 		PreparedStatement stat = null;
 		ResultSet rs = null;
 		try {
-			stat = getConnection().getConnection().prepareStatement(dsql.getSQL());
+			stat = getConnection().getConnection().prepareStatement(dsql.getExecuteSQL());
 			List<Object> parameters = dsql.getParameters();
 			if (null != parameters) {
 				for (int i = 0; i < parameters.size(); i++) {
@@ -245,7 +245,7 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 				}
 			}
 		} catch (SQLException ex) {
-			fatal(String.format("%s : %s", dsql.getName(), dsql.getSQL()), ex);
+			fatal(String.format("%s : %s", dsql.getName(), dsql.getExecuteSQL()), ex);
 			throw new DataAccessServiceException(ex);
 		} finally {
 			release(rs);
