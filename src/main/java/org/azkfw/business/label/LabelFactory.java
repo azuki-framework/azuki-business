@@ -41,21 +41,21 @@ public final class LabelFactory {
 	/**
 	 * ラベルを生成する。
 	 * 
-	 * @param aId ラベルID
+	 * @param id ラベルID
 	 * @return ラベル情報。ラベル情報が存在しない場合、<code>null</code>を返す。
 	 */
-	public static Label create(final String aId) {
-		return create(StringUtility.EMPTY, aId);
+	public static Label create(final String id) {
+		return create(StringUtility.EMPTY, id);
 	}
 
 	/**
 	 * ラベルを生成する。
 	 * 
-	 * @param aNamespace 名前空間
-	 * @param aId ラベルID
+	 * @param namespace 名前空間
+	 * @param id ラベルID
 	 * @return ラベル情報。ラベル情報が存在しない場合、<code>null</code>を返す。
 	 */
-	public static Label create(final String aNamespace, final String aId) {
-		return LabelManager.getLabel(aNamespace, aId);
+	public static Label create(final String namespace, final String id) {
+		return LabelManager.getLabel(namespace, id);
 	}
 }

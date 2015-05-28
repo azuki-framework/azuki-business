@@ -17,6 +17,7 @@
  */
 package org.azkfw.business.label;
 
+import java.util.List;
 import java.util.Map;
 
 import org.azkfw.util.StringUtility;
@@ -72,6 +73,15 @@ public final class Label {
 	/**
 	 * ラベルを生成する。
 	 * 
+	 * @return ラベル
+	 */
+	public String generate() {
+		return label;
+	}
+
+	/**
+	 * ラベルを生成する。
+	 * 
 	 * @param args パラメーター
 	 * @return ラベル
 	 */
@@ -80,6 +90,21 @@ public final class Label {
 		for (int i = 0; i < args.length; i++) {
 			String word = "\\$\\{" + (i + 1) + "\\}";
 			lbl = lbl.replaceAll(word, StringUtility.toStringEmpty(args[i]));
+		}
+		return lbl;
+	}
+
+	/**
+	 * ラベルを生成する。
+	 * 
+	 * @param args パラメーター
+	 * @return ラベル
+	 */
+	public String generate(final List<Object> args) {
+		String lbl = label;
+		for (int i = 0; i < args.size(); i++) {
+			String word = "\\$\\{" + (i + 1) + "\\}";
+			lbl = lbl.replaceAll(word, StringUtility.toStringEmpty(args.get(i)));
 		}
 		return lbl;
 	}

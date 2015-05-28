@@ -42,21 +42,20 @@ public final class LabelPlugin extends AbstractPlugin {
 
 	@Override
 	protected void doInitialize() throws PluginServiceException {
-		LabelManager.initialize();
+		LabelManager.getInstance().initialize();
 	}
 
 	@Override
 	protected void doDestroy() throws PluginServiceException {
-		LabelManager.destroy();
+		LabelManager.getInstance().destroy();
 	}
 
 	@Override
 	protected void doLoad() throws PluginServiceException, ConfigurationFormatException, IOException {
 		try {
-			LabelManager.load(getConfiguration().getResourceAsStream(), getContext());
+			LabelManager.getInstance().load(getConfiguration().getResourceAsStream(), getContext());
 		} catch (BusinessServiceException ex) {
 			throw new PluginServiceException(ex);
 		}
 	}
-
 }
