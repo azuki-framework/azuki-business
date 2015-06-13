@@ -48,24 +48,24 @@ public abstract class AbstractDatabaseAccessObject extends AbstractDataAccessObj
 	/**
 	 * コンストラクタ
 	 * 
-	 * @param aName 名前
+	 * @param name 名前
 	 */
-	public AbstractDatabaseAccessObject(final String aName) {
-		super(aName);
+	public AbstractDatabaseAccessObject(final String name) {
+		super(name);
 	}
 
 	/**
 	 * コンストラクタ
 	 * 
-	 * @param aClass クラス
+	 * @param clazz クラス
 	 */
-	public AbstractDatabaseAccessObject(final Class<?> aClass) {
-		super(aClass);
+	public AbstractDatabaseAccessObject(final Class<?> clazz) {
+		super(clazz);
 	}
 
 	@Override
-	public final void setConnection(final DatabaseConnection aConnection) {
-		connection = aConnection;
+	public final void setConnection(final DatabaseConnection connection) {
+		this.connection = connection;
 	}
 
 	/**

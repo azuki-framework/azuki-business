@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.digester3.Digester;
+import org.apache.commons.digester.Digester;
 import org.azkfw.business.BusinessServiceException;
 import org.azkfw.business.manager.AbstractManager;
 import org.azkfw.business.property.PropertyFile;
@@ -158,7 +158,7 @@ public final class LogicManager extends AbstractManager {
 			digester.addObjectCreate("azuki/logics/logic", LogicEntity.class);
 			digester.addSetProperties("azuki/logics/logic");
 			digester.addSetNext("azuki/logics/logic", "add");
-			logicList = digester.parse(aStream);
+			logicList = (List<LogicEntity>)digester.parse(aStream);
 		} catch (SAXException ex) {
 			error(ex);
 			throw new IOException(ex);

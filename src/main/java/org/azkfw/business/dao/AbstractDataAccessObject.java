@@ -51,10 +51,10 @@ public abstract class AbstractDataAccessObject extends LoggingObject implements 
 	/**
 	 * コンストラクタ
 	 * 
-	 * @param aClass クラス
+	 * @param clazz クラス
 	 */
-	public AbstractDataAccessObject(final Class<?> aClass) {
-		super(aClass);
+	public AbstractDataAccessObject(final Class<?> clazz) {
+		super(clazz);
 	}
 
 	@Override
@@ -83,8 +83,8 @@ public abstract class AbstractDataAccessObject extends LoggingObject implements 
 	}
 
 	@Override
-	public final List<Map<String, Object>> query(final Paging aPaging) throws DataAccessServiceException {
-		return doQuery(aPaging);
+	public final List<Map<String, Object>> query(final Paging paging) throws DataAccessServiceException {
+		return doQuery(paging);
 	}
 
 	/**
@@ -130,9 +130,9 @@ public abstract class AbstractDataAccessObject extends LoggingObject implements 
 	/**
 	 * データを取得する。
 	 * 
-	 * @param aPaging ページ情報
+	 * @param paging ページ情報
 	 * @return データ
 	 * @throws DataAccessServiceException データへのアクセス時に問題が発生した場合
 	 */
-	protected abstract List<Map<String, Object>> doQuery(final Paging aPaging) throws DataAccessServiceException;
+	protected abstract List<Map<String, Object>> doQuery(final Paging paging) throws DataAccessServiceException;
 }

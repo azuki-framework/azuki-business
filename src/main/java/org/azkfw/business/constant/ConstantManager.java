@@ -50,6 +50,11 @@ public class ConstantManager extends AbstractManager {
 	private static final String NAMESPACE_DEFAULT = StringUtility.EMPTY;
 
 	/**
+	 * 定数情報マップ
+	 */
+	private Map<String, Property> constants;
+
+	/**
 	 * 初期化処理を行う。
 	 */
 	public static void initialize() {
@@ -66,30 +71,30 @@ public class ConstantManager extends AbstractManager {
 	/**
 	 * 定数情報をロードします。
 	 * 
-	 * @param aNamespace 名前空間
-	 * @param aStream 定数ファイルストリーム
-	 * @param aContext コンテキスト情報
+	 * @param ns 名前空間
+	 * @param stream 定数ファイルストリーム
+	 * @param context コンテキスト情報
 	 * @throws BusinessServiceException ビジネスサービスに起因する問題が発生した場合
 	 * @throws ConfigurationFormatException 設定ファイルに問題がある場合
 	 * @throws IOException 入出力操作に起因する問題が発生した場合
 	 */
-	public static void load(final String aNamespace, final InputStream aStream, final Context aContext) throws BusinessServiceException,
+	public static void load(final String ns, final InputStream stream, final Context context) throws BusinessServiceException,
 			ConfigurationFormatException, IOException {
-		INSTANCE.doLoad(aNamespace, aStream, aContext);
+		INSTANCE.doLoad(ns, stream, context);
 	}
 
 	/**
 	 * 定数情報をロードします。
 	 * 
-	 * @param aStream 定数ファイルストリーム
-	 * @param aContext コンテキスト情報
+	 * @param stream 定数ファイルストリーム
+	 * @param context コンテキスト情報
 	 * @throws BusinessServiceException ビジネスサービスに起因する問題が発生した場合
 	 * @throws ConfigurationFormatException 設定ファイルに問題がある場合
 	 * @throws IOException 入出力操作に起因する問題が発生した場合
 	 */
-	public static void load(final InputStream aStream, final Context aContext) throws BusinessServiceException, ConfigurationFormatException,
+	public static void load(final InputStream stream, final Context context) throws BusinessServiceException, ConfigurationFormatException,
 			IOException {
-		INSTANCE.doLoad(ConstantManager.NAMESPACE_DEFAULT, aStream, aContext);
+		INSTANCE.doLoad(ConstantManager.NAMESPACE_DEFAULT, stream, context);
 	}
 
 	/**
@@ -105,18 +110,14 @@ public class ConstantManager extends AbstractManager {
 	/**
 	 * 定数を取得する。
 	 * 
-	 * @param namespace 名前空間
+	 * @param ns 名前空間
 	 * @param name 名前
 	 * @return 定数
 	 */
-	public static String getString(final String namespace, final String name) {
-		return INSTANCE.doGetString(namespace, name, null);
+	public static String getString(final String ns, final String name) {
+		return INSTANCE.doGetString(ns, name, null);
 	}
 
-	/**
-	 * 定数情報マップ
-	 */
-	private Map<String, Property> constants;
 
 	/**
 	 * コンストラクタ
@@ -147,23 +148,23 @@ public class ConstantManager extends AbstractManager {
 		}
 	}
 
-	private void doLoad(final String namespace, final InputStream stream, final Context context) throws ConfigurationFormatException, IOException {
+	private void doLoad(final String ns, final InputStream stream, final Context context) throws ConfigurationFormatException, IOException {
 		synchronized (constants) {
-			if (constants.containsKey(namespace)) {
-				throw new ConfigurationFormatException("Duplicate constant namespace.[namespace=" + namespace + "]");
+			if (constants.containsKey(ns)) {
+				throw new ConfigurationFormatException("Duplicate constant namespace.[namespace=" + ns + "]");
 			}
 
 			Properties properties = new Properties();
 			properties.load(stream);
 			Property property = Property.Builder.build(properties);
-			constants.put(namespace, property);
+			constants.put(ns, property);
 		}
 	}
 
-	private String doGetString(final String namespace, final String name, final String def) {
+	private String doGetString(final String ns, final String name, final String def) {
 		String value = def;
-		if (constants.containsKey(namespace)) {
-			Property p = constants.get(namespace);
+		if (constants.containsKey(ns)) {
+			Property p = constants.get(ns);
 			value = p.getString(name, def);
 		}
 		return value;

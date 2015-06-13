@@ -31,25 +31,21 @@ import org.azkfw.util.StringUtility;
  */
 public final class Label {
 
-	/**
-	 * ラベルＩＤ
-	 */
+	/** ラベルID */
 	private String id;
 
-	/**
-	 * ラベル
-	 */
+	/** ラベル */
 	private String label;
 
 	/**
 	 * コンストラクタ
 	 * 
-	 * @param aId ラベルＩＤ
-	 * @param aLabel ラベル
+	 * @param id ラベルID
+	 * @param label ラベル
 	 */
-	public Label(final String aId, final String aLabel) {
-		id = aId;
-		label = aLabel;
+	public Label(final String id, final String label) {
+		this.id = id;
+		this.label = label;
 	}
 
 	/**
@@ -88,7 +84,7 @@ public final class Label {
 	public String generate(final Object... args) {
 		String lbl = label;
 		for (int i = 0; i < args.length; i++) {
-			String word = "\\$\\{" + (i + 1) + "\\}";
+			String word = String.format("\\$\\{%d\\}", (i + 1));
 			lbl = lbl.replaceAll(word, StringUtility.toStringEmpty(args[i]));
 		}
 		return lbl;
@@ -103,7 +99,7 @@ public final class Label {
 	public String generate(final List<Object> args) {
 		String lbl = label;
 		for (int i = 0; i < args.size(); i++) {
-			String word = "\\$\\{" + (i + 1) + "\\}";
+			String word = String.format("\\$\\{%d\\}", (i + 1));
 			lbl = lbl.replaceAll(word, StringUtility.toStringEmpty(args.get(i)));
 		}
 		return lbl;
@@ -118,7 +114,7 @@ public final class Label {
 	public String generate(final Map<String, Object> args) {
 		String lbl = label;
 		for (String key : args.keySet()) {
-			String word = "\\$\\{" + key + "\\}";
+			String word = String.format("\\$\\{%s\\}", key);
 			lbl = lbl.replaceAll(word, StringUtility.toStringEmpty(args.get(key)));
 		}
 		return lbl;

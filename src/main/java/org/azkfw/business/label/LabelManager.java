@@ -124,16 +124,16 @@ public final class LabelManager extends AbstractManager {
 	/**
 	 * ラベル情報をロードします。
 	 * 
-	 * @param namespace 名前空間
+	 * @param ns 名前空間
 	 * @param name 名前
 	 * @param context コンテキスト情報
 	 * @throws BusinessServiceException ビジネスサービスに起因する問題が発生した場合
 	 * @throws ConfigurationFormatException 設定ファイルに問題がある場合
 	 * @throws IOException 入出力操作に起因する問題が発生した場合
 	 */
-	public void load(final String namespace, final String name, final Context context) throws BusinessServiceException,
+	public void load(final String ns, final String name, final Context context) throws BusinessServiceException,
 			ConfigurationFormatException, IOException {
-		INSTANCE.doLoad(namespace, context.getResourceAsStream(name), context);
+		INSTANCE.doLoad(ns, context.getResourceAsStream(name), context);
 	}
 	
 	/**
@@ -152,16 +152,16 @@ public final class LabelManager extends AbstractManager {
 	/**
 	 * ラベル情報をロードします。
 	 * 
-	 * @param namespace 名前空間
+	 * @param ns 名前空間
 	 * @param stream Propertiesファイルストリーム
 	 * @param context コンテキスト情報
 	 * @throws BusinessServiceException ビジネスサービスに起因する問題が発生した場合
 	 * @throws ConfigurationFormatException 設定ファイルに問題がある場合
 	 * @throws IOException 入出力操作に起因する問題が発生した場合
 	 */
-	public void load(final String namespace, final InputStream stream, final Context context) throws BusinessServiceException,
+	public void load(final String ns, final InputStream stream, final Context context) throws BusinessServiceException,
 			ConfigurationFormatException, IOException {
-		INSTANCE.doLoad(namespace, stream, context);
+		INSTANCE.doLoad(ns, stream, context);
 	}
 
 	/**
@@ -185,13 +185,13 @@ public final class LabelManager extends AbstractManager {
 	/**
 	 * ラベル情報をロードする。
 	 * 
-	 * @param namespace 名前空間
+	 * @param ns 名前空間
 	 * @param stream ラベルファイルストリーム
 	 * @param context コンテキスト情報
 	 * @throws ConfigurationFormatException 設定ファイルに問題がある場合
 	 * @throws IOException IO操作時に問題が発生した場合
 	 */
-	private void doLoad(final String namespace, final InputStream stream, final Context context) throws ConfigurationFormatException, IOException {
+	private void doLoad(final String ns, final InputStream stream, final Context context) throws ConfigurationFormatException, IOException {
 		synchronized (labels) {
 			Properties p = new Properties();
 			p.load(stream);
@@ -211,15 +211,16 @@ public final class LabelManager extends AbstractManager {
 				}
 
 				Map<String, Label> lbls = null;
-				if (labels.containsKey(namespace)) {
-					lbls = labels.get(namespace);
+				if (labels.containsKey(ns)) {
+					lbls = labels.get(ns);
 				} else {
 					lbls = new HashMap<String, Label>();
-					labels.put(namespace, lbls);
+					labels.put(ns, lbls);
 				}
 
 				if (lbls.containsKey(k)) {
-					throw new ConfigurationFormatException("Duplicate　label key.[namespace=" + namespace + ", key=" + k + "]");
+					String msg = String.format("Duplicate　label key.[namespace=%s, key=%s]", ns, k);
+					throw new ConfigurationFormatException(msg);
 				}
 
 				Label lbl = new Label(k, v);
@@ -231,14 +232,14 @@ public final class LabelManager extends AbstractManager {
 	/**
 	 * ラベルを取得する。
 	 * 
-	 * @param namespace 名前空間
+	 * @param ns 名前空間
 	 * @param id ラベルID
 	 * @return ラベル情報。ラベル情報が存在しない場合、<code>null</code>を返す。
 	 */
-	private Label doGetLabel(final String namespace, final String id) {
+	private Label doGetLabel(final String ns, final String id) {
 		Label lbl = null;
-		if (labels.containsKey(namespace)) {
-			Map<String, Label> ms = labels.get(namespace);
+		if (labels.containsKey(ns)) {
+			Map<String, Label> ms = labels.get(ns);
 			if (ms.containsKey(id)) {
 				lbl = ms.get(id);
 			}

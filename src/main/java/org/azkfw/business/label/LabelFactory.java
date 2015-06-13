@@ -51,11 +51,11 @@ public final class LabelFactory {
 	/**
 	 * ラベルを生成する。
 	 * 
-	 * @param namespace 名前空間
+	 * @param ns 名前空間
 	 * @param id ラベルID
 	 * @return ラベル情報。ラベル情報が存在しない場合、<code>null</code>を返す。
 	 */
-	public static Label create(final String namespace, final String id) {
-		return LabelManager.getLabel(namespace, id);
+	public static Label create(final String ns, final String id) {
+		return LabelManager.getLabel(ns, id);
 	}
 }

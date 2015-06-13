@@ -74,9 +74,9 @@ public interface DataAccessObject {
 	/**
 	 * データを取得する。
 	 * 
-	 * @param aPaging ページング情報
+	 * @param paging ページング情報
 	 * @return データ
 	 * @throws DataAccessServiceException データへのアクセス時に問題が発生した場合
 	 */
-	public List<Map<String, Object>> query(final Paging aPaging) throws DataAccessServiceException;
+	public List<Map<String, Object>> query(final Paging paging) throws DataAccessServiceException;
 }

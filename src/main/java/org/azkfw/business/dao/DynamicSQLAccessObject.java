@@ -47,11 +47,11 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 	/**
 	 * コンストラクタ
 	 * 
-	 * @param aDynamicSQL DynamicSQL情報
+	 * @param dynamicSQL DynamicSQL情報
 	 */
-	public DynamicSQLAccessObject(final DynamicSQL aDynamicSQL) {
+	public DynamicSQLAccessObject(final DynamicSQL dynamicSQL) {
 		super(DynamicSQLAccessObject.class);
-		dsql = aDynamicSQL;
+		dsql = dynamicSQL;
 	}
 
 	@Override
@@ -183,7 +183,7 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 	}
 
 	@Override
-	protected List<Map<String, Object>> doQuery(final Paging aPaging) throws DataAccessServiceException {
+	protected List<Map<String, Object>> doQuery(final Paging paging) throws DataAccessServiceException {
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 
 		PreparedStatement stat = null;
@@ -209,18 +209,18 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 			}
 
 			// TODO ページング対応
-			if (null != aPaging) {
-				if (StringUtility.isNotEmpty(aPaging.getKey())) {
-					if (StringUtility.isNotEmpty(aPaging.getSinceId())) {
+			if (null != paging) {
+				if (StringUtility.isNotEmpty(paging.getKey())) {
+					if (StringUtility.isNotEmpty(paging.getSinceId())) {
 						throw new DataAccessServiceException("Unsupported since pageing.");
-					} else if (StringUtility.isNotEmpty(aPaging.getMaxId())) {
+					} else if (StringUtility.isNotEmpty(paging.getMaxId())) {
 						throw new DataAccessServiceException("Unsupported max pageing.");
 					} else {
 						throw new DataAccessServiceException("Unsupported pageing setting.");
 					}
 				} else {
-					long start = aPaging.getPage() * aPaging.getSize();
-					long end = (aPaging.getPage() + 1) * aPaging.getSize();
+					long start = paging.getPage() * paging.getSize();
+					long end = (paging.getPage() + 1) * paging.getSize();
 					long count = 0;
 					while (rs.next()) {
 						if (count >= end) {

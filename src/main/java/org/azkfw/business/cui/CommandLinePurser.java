@@ -171,7 +171,6 @@ public class CommandLinePurser {
 
 			} else {
 				arguments.add(str);
-
 			}
 		}
 
