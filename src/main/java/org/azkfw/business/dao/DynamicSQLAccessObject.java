@@ -158,7 +158,7 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 			for (int i = 0; i < md.getColumnCount(); i++) {
 				String column = md.getColumnName(i + 1);
 				columns.add(column);
-				keys.add(StringUtility.toCamel(column));
+				keys.add(StringUtility.toCamelcase(column));
 			}
 
 			if (rs.next()) {
@@ -205,7 +205,7 @@ public class DynamicSQLAccessObject extends AbstractDatabaseAccessObject {
 			for (int i = 0; i < md.getColumnCount(); i++) {
 				String column = md.getColumnName(i + 1);
 				columns.add(column);
-				keys.add(StringUtility.toCamel(column));
+				keys.add(StringUtility.toCamelcase(column));
 			}
 
 			// TODO ページング対応
