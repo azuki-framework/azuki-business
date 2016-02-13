@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.azkfw.business.task.Task;
-import org.azkfw.lang.LoggingObject;
+import org.azkfw.log.LoggingObject;
 
 /**
  * このクラスは、複数タスクを管理するサーバクラスです。

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.azkfw.business.paging.Paging;
-import org.azkfw.lang.LoggingObject;
+import org.azkfw.log.LoggingObject;
 
 /**
  * このクラスは、データアクセス機能の実装を行うための基底クラスです。

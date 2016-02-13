@@ -20,7 +20,7 @@ package org.azkfw.business.task;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.azkfw.lang.LoggingObject;
+import org.azkfw.log.LoggingObject;
 
 /**
  * このクラスは、タスク機能の実装を行うための基底クラスです。

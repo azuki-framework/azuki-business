@@ -19,11 +19,11 @@ package org.azkfw.business.logic;
 
 import org.azkfw.business.dao.DataAccessObject;
 import org.azkfw.business.dao.DynamicSQLAccessObject;
+import org.azkfw.business.database.DatabaseConnectionSupport;
 import org.azkfw.dsql.DynamicSQL;
 import org.azkfw.dsql.DynamicSQLManager;
 import org.azkfw.dsql.Group;
 import org.azkfw.dsql.Parameter;
-import org.azkfw.persistence.database.DatabaseConnectionSupport;
 
 /**
  * このクラスは、ダイナミックSQL機能を実装したロジッククラスです。

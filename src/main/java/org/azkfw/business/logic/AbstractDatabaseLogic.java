@@ -19,8 +19,8 @@ package org.azkfw.business.logic;
 
 import java.sql.SQLException;
 
-import org.azkfw.persistence.database.DatabaseConnection;
-import org.azkfw.persistence.database.DatabaseConnectionSupport;
+import org.azkfw.business.database.DatabaseConnection;
+import org.azkfw.business.database.DatabaseConnectionSupport;
 
 /**
  * このクラスは、データベース機能を実装するロジッククラスです。
@@ -29,7 +29,7 @@ import org.azkfw.persistence.database.DatabaseConnectionSupport;
  * @version 1.0.0 2013/02/05
  * @author Kawakicchi
  */
-public abstract class AbstractDatabaseLogic extends AbstractPersistenceLogic implements DatabaseConnectionSupport {
+public abstract class AbstractDatabaseLogic extends AbstractPersistenceLogic implements DatabaseConnectionSupport{
 
 	/**
 	 * コネクション情報
@@ -66,12 +66,8 @@ public abstract class AbstractDatabaseLogic extends AbstractPersistenceLogic imp
 		connection = aConnection;
 	}
 
-	/**
-	 * コネクションを取得する。
-	 * 
-	 * @return コネクション
-	 */
-	protected final DatabaseConnection getConnection() {
+	@Override
+	public final DatabaseConnection getConnection() {
 		return connection;
 	}
 

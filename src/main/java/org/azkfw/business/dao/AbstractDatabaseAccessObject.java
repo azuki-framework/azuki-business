@@ -21,8 +21,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.azkfw.persistence.database.DatabaseConnection;
-import org.azkfw.persistence.database.DatabaseConnectionSupport;
+import org.azkfw.business.database.DatabaseConnection;
+import org.azkfw.business.database.DatabaseConnectionSupport;
 
 /**
  * このクラスは、データベース機能を備えたデータアクセスオブジェクトクラスです。
@@ -68,12 +68,8 @@ public abstract class AbstractDatabaseAccessObject extends AbstractDataAccessObj
 		this.connection = connection;
 	}
 
-	/**
-	 * コネクションを取得する。
-	 * 
-	 * @return コネクション
-	 */
-	protected final DatabaseConnection getConnection() {
+	@Override
+	public final DatabaseConnection getConnection() {
 		return connection;
 	}
 

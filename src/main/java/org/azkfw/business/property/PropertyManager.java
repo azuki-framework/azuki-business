@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.azkfw.context.Context;
-import org.azkfw.lang.LoggingObject;
+import org.azkfw.log.LoggingObject;
 import org.azkfw.util.StringUtility;
 
 /**

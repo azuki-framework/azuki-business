@@ -22,7 +22,7 @@ import org.azkfw.business.property.PropertyManager;
 import org.azkfw.business.property.PropertySupport;
 import org.azkfw.context.Context;
 import org.azkfw.context.ContextSupport;
-import org.azkfw.lang.LoggingObject;
+import org.azkfw.log.LoggingObject;
 import org.azkfw.parameter.Parameter;
 import org.azkfw.parameter.ParameterSupport;
 

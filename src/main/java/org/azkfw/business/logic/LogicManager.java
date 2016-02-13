@@ -154,10 +154,10 @@ public final class LogicManager extends AbstractManager {
 		List<LogicEntity> logicList = null;
 		try {
 			Digester digester = new Digester();
-			digester.addObjectCreate("azuki/logics", ArrayList.class);
-			digester.addObjectCreate("azuki/logics/logic", LogicEntity.class);
-			digester.addSetProperties("azuki/logics/logic");
-			digester.addSetNext("azuki/logics/logic", "add");
+			digester.addObjectCreate("azuki-logic/logic-list", ArrayList.class);
+			digester.addObjectCreate("azuki-logic/logic-list/logic", LogicEntity.class);
+			digester.addSetProperties("azuki-logic/logic-list/logic");
+			digester.addSetNext("azuki-logic/logic-list/logic", "add");
 			logicList = (List<LogicEntity>)digester.parse(aStream);
 		} catch (SAXException ex) {
 			error(ex);
